@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Upload Image</title>
+	<link rel="stylesheet" type="text/css" href="preview.css">
+	<script type="text/javascript" src="uploadimg.js"></script>
+	<script type="text/javascript" src="preview.js"></script>
+</head>
+<body>
+    <h1>1. uploadimg.js</h1>
+    <p>
+    	<img id="uploadimg">
+    	<input type="file" id='upload'>
+    </p>
+
+    <h1>2. uploadimg.js</h1>
+    <p><input type="file" id="preview"></p>
+<script type="text/javascript">
+new PreviewImage({
+	id: 'preview',
+	multiple: true,
+});
+new UploadImg({
+	file  : "upload",              // input标签的ID
+  img   : "uploadimg",               // img标签的ID
+  error : "error",
+});
+</script>
+</body>
+</html>

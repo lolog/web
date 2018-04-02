@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>入门实例</title>
+
+    <script src="lib/jquery-3.2.1.js"></script>
+    <script src="lib/underscore.js?v=1.8.2"></script>
+    <script src="lib/backbone.js?v=1.1.2"></script>
+</head>
+<body>
+	<input id="name" type="text"><br>
+	<button id="check">新增</button>
+    <ul id="world-list"></ul>
+
+<script type="text/javascript">
+	$(function ($) {
+		// 创建People的model对象
+		// 即,People只拥有name属性
+		People = Backbone.Model.extend ({
+			name: null
+		});
+		
+		// 创建People的Collection(集合)对象
+		Peoples = Backbone.Collection.extend({
+			initialize: function (models, options) {
+				// 绑定Collection事件触发函数
+				this.on("add", options.view.addPeople)
+			}
+		});
+
+		// 视图创建
+		AppView = Backbone.View.extend({
+			el: $('body'),
+			// 构造函数
+			initialize: function () {
+				// 构建一个Peoples集合对象
+				// 并且,以字典方式存入到appView中
+				this.peoples = new Peoples(null, {view: this});
+			},
+			// 事件监听
+			events: {
+				"click #check":  "checkIn",
+			},
+			// 事件执行函数
+			checkIn: function () {
+              	var name = document.getElementById('name').value;
+                var people = new People({name: name});
+                // 触发collection的事件
+                this.peoples.add(people);
+            },
+            addPeople: function(model) {
+                $("#world-list").append("<li>欢迎：<b>" + model.get('name') + "</b> 加入我们");
+            }
+		})
+		//实例化AppView
+        var appview = new AppView;
+	})
+</script>
+
+</body>
+</html>
